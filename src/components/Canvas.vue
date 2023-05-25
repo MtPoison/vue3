@@ -15,7 +15,7 @@
             canva.height = this.height;
             // this.game = new GameScene(context, canva.width, canva.height);
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
-            window.addEventListener('keyup', this.animate);
+            window.addEventListener('keydown', this.animate);
 
         },
         data(){
