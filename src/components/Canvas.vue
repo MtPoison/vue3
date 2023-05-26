@@ -14,11 +14,7 @@
             this.context = canva.getContext('2d');
             canva.width = this.width;
             canva.height = this.height;
-            this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
-            window.addEventListener('keydown', this.animateCharacter);
-            // window.addEventListener('keyup', this.animateCharacterProjectil);
-            this.animateEnemi();
-            // this.drawGame();
+            this.drawGame();
         },
         data(){
                 return{
@@ -27,7 +23,7 @@
                         y: 510,
                     },
                     context: null,
-                    height: 5000,
+                    height: 600,
                     width: window.innerWidth,
                     game: window.innerHeight,
 
@@ -49,6 +45,12 @@
                         x: 0,
                         y: 0,
                     },
+
+                    vieChracter: {
+                        vieChracter: 500,
+                        vieMaxCharacter: 500,
+                    },
+                    degatMeteorite : 50
                     
                 }
                
@@ -56,12 +58,28 @@
 
         methods: {
 
-            // drawGame(){
-            //     this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
-            //     window.addEventListener('keydown', this.animateCharacter);
-            //     this.animateEnemi();
+            collision(){
+                    if(this.characterPosition.x <= this.enemisPosition.x && this.characterPosition.y <= this.enemisPosition.y ){
+                        console.log('ok collision !!!');
+                        this.vieChracter -= this.degatMeteorite;
+                        console.log(this.vieChracter);
+                        
+                        cancelAnimationFrame(this.animateEnemi)
+                    }
+                    
+                    
+            },
+
+            drawGame(){
+                this.context.clearRect(0, 0, this.width, this.height);
+                this.collision();
+                this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
+                window.addEventListener('keydown', this.animateCharacter);
+                window.addEventListener('keyup', this.animateCharacterProjectil);
+                this.animateEnemi();
+                requestAnimationFrame(this.drawGame.bind(this));
                 
-            // },
+            },
 
             drawCharacter(x, y) {
                 if (typeof x !== "number" && typeof y !== "number" )
@@ -103,44 +121,37 @@
                 
                 this.context.fillStyle = 'rgb(255, 0, 0)';
                 this.context.fillRect(x, y-25, 500, 15);
+
                 this.context.fillStyle = 'rgb(124, 255, 0)';
                 this.context.fillRect(x, y-25, 500, 15);
         },      
 
         animateCharacter(event) {
-            this.context.clearRect(0, 0, this.width, this.height);
+           
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
-            console.log('animate');
             switch (event.keyCode) {
-                case this.characterPosition.x === 2350 || this.characterPosition.y === 2300 || this.characterPosition.x === -1 || this.characterPosition.y === -1:
-                //    cancelAnimationFrame(this.animate.bind(this));
+                case this.characterPosition.x === 2350 || this.characterPosition.y === 2300 || this.characterPosition.x === -1 || this.characterPosition.y === -1:        
                    break;   
                 case this.KEY_CODE.LEFT:
-                   this.characterPosition.x -= 10;
+                   this.characterPosition.x -= 10
                    break;
                 case this.KEY_CODE.RIGHT:
                    this.characterPosition.x += 10;
+
                    break;
                 case this.KEY_CODE.DOWN:
                    this.characterPosition.y += 10;
+  
                    break;
                 case this.KEY_CODE.UP:
                    this.characterPosition.y -= 10;
+
                    break;
                 default:
-                    requestAnimationFrame(this.animateCharacter.bind(this));
                    break;
                 }
-                
-
-            
             },
             
-
-
-
-
-
             drawCharacterProjectil(x,y){
 
                 x = 10-this.characterPosition.x;
@@ -151,13 +162,12 @@
             },
 
             animateCharacterProjectil(event){
-                this.context.clearRect(0, 0, this.width, this.height);
                 this.drawCharacterProjectil(this.projectilChracter.x, this.projectilChracter.y);
                 switch (event.keyCode) {
                     case this.KEY_CODE.SHOOT:
                         this.projectilChracter.x -= 15;
+                        this.drawCharacterProjectil.y =0;
                 }
-                requestAnimationFrame(this.animateCharacterProjectil.bind(this)); 
             },
 
             drawEnemie(x,y){
@@ -166,11 +176,10 @@
             },
 
             animateEnemi(){
-                this.context.clearRect(0, 0, this.width, this.height);
                 this.drawEnemie(this.enemisPosition.x, this.enemisPosition.y);
                 this.enemisPosition.x += 5;
-                this.enemisPosition.y += 3;
-                requestAnimationFrame(this.animateEnemi.bind(this)); 
+                this.enemisPosition.y += 3; 
+  
 
             },
            
