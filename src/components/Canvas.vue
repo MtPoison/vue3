@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { getTransitionRawChildren } from 'vue';
+
     export default{
 
         mounted(){
@@ -13,11 +15,9 @@
             this.context = canva.getContext('2d');
             canva.width = this.width;
             canva.height = this.height;
-            // this.game = new GameScene(context, canva.width, canva.height);
-            this.drawEnemie(this.enemisPosition.x, this.enemisPosition.y);
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
             window.addEventListener('keydown', this.animate);
-
+            this.animateEnemi();
         },
         data(){
                 return{
@@ -39,7 +39,7 @@
                     },
 
                     enemisPosition: {
-                        x: 600,
+                        x: 1000,
                         y: 0,
                     },
                     
@@ -121,6 +121,15 @@
                 this.context.fillStyle = 'rgb(96, 96, 96)';
                 this.context.fillRect(x, y, 30, 30);
             },
+
+            animateEnemi(){
+                this.context.clearRect(0, 0, this.width, this.height);
+                this.drawEnemie(this.enemisPosition.x, this.enemisPosition.y);
+                this.enemisPosition.x += 5;
+                this.enemisPosition.y += 3;
+                requestAnimationFrame(this.animateEnemi.bind(this)); 
+
+            }
            
         },
         
