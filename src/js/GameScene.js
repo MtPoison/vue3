@@ -12,7 +12,7 @@ export class GameScene {
     //   this.y = 0;
     }
 
-    #drawCharacter(x, y) {
+    drawCharacter(x, y) {
        // body
         this.#ctx.fillStyle = 'rgb(0, 0, 0)';
         this.#ctx.fillRect(x, y, 500, 500);

@@ -14,6 +14,7 @@
             canva.width = this.width;
             canva.height = this.height;
             // this.game = new GameScene(context, canva.width, canva.height);
+            this.drawEnemie(this.enemisPosition.x, this.enemisPosition.y);
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
             window.addEventListener('keydown', this.animate);
 
@@ -26,15 +27,20 @@
                     },
                     context: null,
                     height: 5000,
-                    width: 5000,
-                    game: null,
+                    width: window.innerWidth,
+                    game: window.innerHeight,
 
-
+                    
                     KEY_CODE: {
                         LEFT: 81,
                         UP: 90,
                         RIGHT: 68,
                         DOWN: 83,
+                    },
+
+                    enemisPosition: {
+                        x: 600,
+                        y: 0,
                     },
                     
                 }
@@ -82,8 +88,6 @@
 
         animate(event) {
             this.context.clearRect(0, 0, this.width, this.height);
-            // this.characterPosition.x += 10;
-            // this.characterPosition.y += 0.00;
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
             console.log('animate');
             switch (event.keyCode) {
@@ -109,14 +113,14 @@
                 default:
                     requestAnimationFrame(this.animate.bind(this));
                    break;
-            }            
-            // if(this.characterPosition.x === 2350 || this.characterPosition.y === 2300){
-            //     cancelAnimationFrame(this.animate.bind(this));
-            // }else{
-                
-            // }
+                }            
             
-        }
+            },
+
+            drawEnemie(x,y){
+                this.context.fillStyle = 'rgb(96, 96, 96)';
+                this.context.fillRect(x, y, 30, 30);
+            },
            
         },
         
