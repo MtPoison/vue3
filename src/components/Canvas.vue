@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { getTransitionRawChildren } from 'vue';
 
     export default{
 
@@ -16,14 +15,16 @@ import { getTransitionRawChildren } from 'vue';
             canva.width = this.width;
             canva.height = this.height;
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
-            window.addEventListener('keydown', this.animate);
+            window.addEventListener('keydown', this.animateCharacter);
+            // window.addEventListener('keyup', this.animateCharacterProjectil);
             this.animateEnemi();
+            // this.drawGame();
         },
         data(){
                 return{
                     characterPosition: {
-                        x: 0,
-                        y: 0,
+                        x: 1900,
+                        y: 510,
                     },
                     context: null,
                     height: 5000,
@@ -36,10 +37,16 @@ import { getTransitionRawChildren } from 'vue';
                         UP: 90,
                         RIGHT: 68,
                         DOWN: 83,
+                        SHOOT: 69,
                     },
 
                     enemisPosition: {
                         x: 1000,
+                        y: 0,
+                    },
+
+                    projectilChracter: {
+                        x: 0,
                         y: 0,
                     },
                     
@@ -48,6 +55,13 @@ import { getTransitionRawChildren } from 'vue';
             },
 
         methods: {
+
+            // drawGame(){
+            //     this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
+            //     window.addEventListener('keydown', this.animateCharacter);
+            //     this.animateEnemi();
+                
+            // },
 
             drawCharacter(x, y) {
                 if (typeof x !== "number" && typeof y !== "number" )
@@ -84,9 +98,16 @@ import { getTransitionRawChildren } from 'vue';
                 this.context.fillStyle= 'rgb(0, 0, 0)';
                 this.context.arc(375+x, 100+y, 20, 0, 2 * Math.PI);
                 this.context.fill();
+
+                // barre de vie 
+                
+                this.context.fillStyle = 'rgb(255, 0, 0)';
+                this.context.fillRect(x, y-25, 500, 15);
+                this.context.fillStyle = 'rgb(124, 255, 0)';
+                this.context.fillRect(x, y-25, 500, 15);
         },      
 
-        animate(event) {
+        animateCharacter(event) {
             this.context.clearRect(0, 0, this.width, this.height);
             this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
             console.log('animate');
@@ -95,26 +116,48 @@ import { getTransitionRawChildren } from 'vue';
                 //    cancelAnimationFrame(this.animate.bind(this));
                    break;   
                 case this.KEY_CODE.LEFT:
-                   console.log('Left');
                    this.characterPosition.x -= 10;
                    break;
                 case this.KEY_CODE.RIGHT:
-                   console.log('Right');
                    this.characterPosition.x += 10;
                    break;
                 case this.KEY_CODE.DOWN:
-                   console.log('Down');
                    this.characterPosition.y += 10;
                    break;
                 case this.KEY_CODE.UP:
-                   console.log('Up');
                    this.characterPosition.y -= 10;
                    break;
                 default:
-                    requestAnimationFrame(this.animate.bind(this));
+                    requestAnimationFrame(this.animateCharacter.bind(this));
                    break;
-                }            
+                }
+                
+
             
+            },
+            
+
+
+
+
+
+            drawCharacterProjectil(x,y){
+
+                x = 10-this.characterPosition.x;
+                y = this.characterPosition.y;
+                this.context.fillStyle = 'rgb(96, 96, 96)';
+                this.context.fillRect(x, y, 60, 30);
+
+            },
+
+            animateCharacterProjectil(event){
+                this.context.clearRect(0, 0, this.width, this.height);
+                this.drawCharacterProjectil(this.projectilChracter.x, this.projectilChracter.y);
+                switch (event.keyCode) {
+                    case this.KEY_CODE.SHOOT:
+                        this.projectilChracter.x -= 15;
+                }
+                requestAnimationFrame(this.animateCharacterProjectil.bind(this)); 
             },
 
             drawEnemie(x,y){
@@ -129,7 +172,7 @@ import { getTransitionRawChildren } from 'vue';
                 this.enemisPosition.y += 3;
                 requestAnimationFrame(this.animateEnemi.bind(this)); 
 
-            }
+            },
            
         },
         
