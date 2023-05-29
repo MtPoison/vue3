@@ -1,4 +1,6 @@
-export class GameScene {
+import Character from '../js/Character'
+
+export default class GameScene {
     #ctx;
     #width;
     #height;
@@ -8,11 +10,12 @@ export class GameScene {
       this.#width = width;
       this.#height = height;
       console.log('Game loaded');
-    //   this.x = 0;
-    //   this.y = 0;
+      this.x = 0;
+      this.y = 0;
+      this.character = new Character(ctx, width, height);
     }
 
-    drawCharacter(x, y) {
+    #drawCharacter(x, y) {
        // body
         this.#ctx.fillStyle = 'rgb(0, 0, 0)';
         this.#ctx.fillRect(x, y, 500, 500);
@@ -55,4 +58,23 @@ export class GameScene {
         console.log('animate');
         requestAnimationFrame(this.animate.bind(this));
     }
-}   
+
+    #draw(){
+        this.#ctx.clearRect(0, 0, this.#width, this.#height);
+        // this.collision();
+        // this.drawCharacter(this.characterPosition.x, this.characterPosition.y);
+        // window.addEventListener('keydown', this.animateCharacter);
+        // window.addEventListener('keyup', this.animateCharacterProjectil);
+        // this.animateEnemi();
+        this.character.animate();
+        console.log("drawing the game");
+        
+    }
+
+    gameLoop(){
+        this.#draw();
+        
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
+}
+
