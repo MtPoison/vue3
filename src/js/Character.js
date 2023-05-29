@@ -7,16 +7,14 @@ const KEY_CODE =  {
 
 export default class Character{
     #ctx
-    #width
-    #height
 
-    constructor(ctx, width, height){
+    constructor(ctx){
         this.#ctx = ctx;
-        this.#width = width;
-        this.#height = height;
-        this.x = 0;
-        this.y = 50;
-        
+        this.x = 1900;
+        this.y = 510;
+        this.heal = 500;
+        this.maxheal = 500;
+        this.play = 0;
         window.addEventListener('keydown', this.animate.bind(this));
     }
 
@@ -63,11 +61,10 @@ export default class Character{
         this.#ctx.fillRect(x, y-25, 500, 15);
 
         this.#ctx.fillStyle = 'rgb(124, 255, 0)';
-        this.#ctx.fillRect(x, y-25, 500, 15);
+        this.#ctx.fillRect(x, y-25, this.heal, 15);
         }
 
     animate(event){
-        console.log(event);
         this.#draw(this.x, this.y);
         if(!event)return
         switch (event.keyCode) { 
@@ -78,7 +75,7 @@ export default class Character{
                if(this.x < 2350)this.x += 10;
                break;
             case KEY_CODE.DOWN:
-               if(this.y < 2300) this.y += 10;
+               if(this.y < 500) this.y += 10;
                break;
             case KEY_CODE.UP:
                if(this.y > 0)this.y -= 10;
@@ -86,5 +83,5 @@ export default class Character{
             default:
                break;
             }
-    }
+   }
 }
