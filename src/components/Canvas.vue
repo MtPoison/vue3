@@ -17,13 +17,12 @@
             canva.height = this.height;
             const game = new Game(this.context, this.width, this.height);
             game.gameLoop.apply(game);
-            
-            // this.drawGame();
         },
+        
         data(){
                 return{
                     context: null,
-                    height: 1075,
+                    height: 1400,
                     width: 2850,
                 }
                

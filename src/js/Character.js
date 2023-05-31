@@ -6,6 +6,7 @@ const KEY_CODE =  {
         }
 
 export default class Character{
+
     #ctx
 
     constructor(ctx){
@@ -14,7 +15,6 @@ export default class Character{
         this.y = 510;
         this.heal = 500;
         this.maxheal = 500;
-        this.play = 0;
         window.addEventListener('keydown', this.animate.bind(this));
     }
 
@@ -58,7 +58,7 @@ export default class Character{
         // barre de vie 
         
         this.#ctx.fillStyle = 'rgb(255, 0, 0)';
-        this.#ctx.fillRect(x, y-25, 500, 15);
+        this.#ctx.fillRect(x, y-25, this.maxheal, 15);
 
         this.#ctx.fillStyle = 'rgb(124, 255, 0)';
         this.#ctx.fillRect(x, y-25, this.heal, 15);
@@ -72,16 +72,16 @@ export default class Character{
                if(this.x > 0)this.x -= 10
                break;
             case KEY_CODE.RIGHT:
-               if(this.x < 2350)this.x += 10;
+               if(this.x < 2350)this.x += 20;
                break;
             case KEY_CODE.DOWN:
-               if(this.y < 500) this.y += 10;
+               if(this.y < 825) this.y += 20;
                break;
             case KEY_CODE.UP:
                if(this.y > 0)this.y -= 10;
                break;
             default:
                break;
-            }
+         }
    }
 }
