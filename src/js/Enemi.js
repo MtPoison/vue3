@@ -1,10 +1,10 @@
-export default class Meteroite{
+export default class Meteorite{
 
     #ctx
 
     constructor(ctx){
         this.#ctx = ctx;
-        this.x = Math.floor(Math.random()*10);
+        this.x = 0;
         this.y = 0;
         this.hit= 50;
         console.log(this.x);

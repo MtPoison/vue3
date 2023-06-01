@@ -19,7 +19,8 @@ export default class GameScene {
         this.y = 0;
         this.character = new Character(ctx);
         this.meteorites = [];
-        this.createMeteorites(); 
+        this.createMeteorites();
+        this.game_over = false;
       }
     
       createMeteorites() {
@@ -28,7 +29,7 @@ export default class GameScene {
             const meteorite = new Meteorite(this.#ctx);
             meteorite.x = random;
             this.meteorites.push(meteorite);
-          }, 2000); 
+          }, 1000); 
         }
       
       #collision() {
@@ -43,11 +44,23 @@ export default class GameScene {
             this.character.heal -= meteorite.hit;
             meteorite.x = 2890;
             meteorite.y = 1120;
-            this.game = true;
+            if(this.character.heal === 0) this.game_over = true;
+            
           }
         }
       }
 
+      gameOver(){
+        if(this.game_over){
+            this.#ctx.fillStyle = 'black';
+            this.#ctx.fillRect(0, 0, this.#width, this.#height);
+            this.#ctx.fillStyle = 'white';
+            this.#ctx.font = '40px Arial';
+            this.#ctx.textAlign = 'center';
+            this.#ctx.fillText('Game Over', this.#width / 2, this.#height / 2);
+            return;
+        }
+      }
 
     #draw() {
         this.#ctx.clearRect(0, 0, this.#width, this.#height);
@@ -58,10 +71,10 @@ export default class GameScene {
           if (meteorite.x > this.#width || meteorite.y > this.#height) {
             this.meteorites.splice(i, 1);
             i--;
-          }
+          } 
         }
-        
         this.#collision();
+        this.gameOver();
       }
 
     gameLoop(){
