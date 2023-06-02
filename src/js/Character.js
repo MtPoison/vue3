@@ -69,16 +69,16 @@ export default class Character{
         if(!event)return
         switch (event.keyCode) { 
             case KEY_CODE.LEFT:
-               if(this.x > 0)this.x -= 10
+               if(this.x > 0)this.x -= 50
                break;
             case KEY_CODE.RIGHT:
-               if(this.x < 2350)this.x += 20;
+               if(this.x < 2350)this.x += 50;
                break;
             case KEY_CODE.DOWN:
-               if(this.y < 825) this.y += 20;
+               if(this.y < 825) this.y += 50;
                break;
             case KEY_CODE.UP:
-               if(this.y > 0)this.y -= 10;
+               if(this.y > 0)this.y -= 50;
                break;
             default:
                break;

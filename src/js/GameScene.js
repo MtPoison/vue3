@@ -21,18 +21,19 @@ export default class GameScene {
         this.meteorites = [];
         this.createMeteorites();
         this.game_over = false;
+        
       }
     
-      createMeteorites() {
+    createMeteorites() {
         setInterval(() => {
-            const random = Math.random() * (this.#width - 60); 
+            const randomX = Math.random() * (this.#width - 60); 
             const meteorite = new Meteorite(this.#ctx);
-            meteorite.x = random;
+            meteorite.x = randomX;
             this.meteorites.push(meteorite);
           }, 1000); 
         }
       
-      #collision() {
+    #collision() {
         for (let i = 0; i < this.meteorites.length; i++) {
           const meteorite = this.meteorites[i];
           if (
@@ -50,17 +51,18 @@ export default class GameScene {
         }
       }
 
-      gameOver(){
+    gameOver(){
         if(this.game_over){
-            this.#ctx.fillStyle = 'black';
-            this.#ctx.fillRect(0, 0, this.#width, this.#height);
+            this.#ctx.clearRect(0, 0, this.#width, this.#height);
             this.#ctx.fillStyle = 'white';
-            this.#ctx.font = '40px Arial';
+            this.#ctx.font = '100px Arial';
             this.#ctx.textAlign = 'center';
             this.#ctx.fillText('Game Over', this.#width / 2, this.#height / 2);
             return;
         }
       }
+    
+
 
     #draw() {
         this.#ctx.clearRect(0, 0, this.#width, this.#height);
@@ -75,6 +77,7 @@ export default class GameScene {
         }
         this.#collision();
         this.gameOver();
+     
       }
 
     gameLoop(){
