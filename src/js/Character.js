@@ -1,8 +1,9 @@
 const KEY_CODE =  {
-            LEFT: 81,
-            UP: 90,
-            RIGHT: 68,
-            DOWN: 83,
+   // defined the key 
+            LEFT: 81, //q 
+            UP: 90, //z
+            RIGHT: 68, // d
+            DOWN: 83, //s
         }
 
 export default class Character{
@@ -15,11 +16,12 @@ export default class Character{
         this.y = 510;
         this.heal = 500;
         this.maxheal = 500;
-        window.addEventListener('keydown', this.animate.bind(this));
+        this.animateCallBack = this.animate.bind(this);
+        window.addEventListener('keydown', this.animateCallBack);
     }
 
     #draw(x,y){
-        // this.#ctx.clearRect(0, 0, this.#width, this.#height);
+
         if (typeof x !== "number" && typeof y !== "number" )
         throw new Error("il manque deffinition de x et y");
         // body
@@ -65,8 +67,9 @@ export default class Character{
         }
 
     animate(event){
+      //  mouvement with a keybord 
         this.#draw(this.x, this.y);
-        if(!event)return
+        if(!event)return;
         switch (event.keyCode) { 
             case KEY_CODE.LEFT:
                if(this.x > 0)this.x -= 50
@@ -83,5 +86,9 @@ export default class Character{
             default:
                break;
          }
+   }
+
+   removeListener(){
+      window.removeEventListener('keydown', this.animateCallBack);
    }
 }
