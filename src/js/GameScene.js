@@ -84,7 +84,7 @@ export default class GameScene {
         this.#ctx.fillStyle = 'white';
         this.#ctx.font = '50px Arial';
         this.#ctx.textAlign = 'center';
-        this.#ctx.fillText(`Score : ${this.score}` , 50, 50);
+        this.#ctx.fillText(`Score : ${this.score}` , 150, 50);
       }
 
     gameOver(){
